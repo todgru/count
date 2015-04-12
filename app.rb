@@ -2,21 +2,54 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.require(:default)
 
+class CountIt
+
+  def self.key
+    @key ||= self.generate_new_key
+  end
+
+  def self.generate_new_key
+    a = ('a'..'z').to_a.concat ('A'..'Z').to_a
+    a.shuffle[0,8].join
+  end
+
+end
+
+redis = Redis.new
+
 get '/' do
+  key = params['key']
+  params['key'] = CountIt::key if key.nil?
+  redirect "count/#{params['key']}"
+end
+
+# trailing slash optional
+get '/count/?' do
+  key = params['key']
+  params['key'] = CountIt::key if key.nil?
+  redirect "count/#{params['key']}"
+end
+
+# get the value of the users count
+#
+# @key string
+#
+get '/count/:key' do
+  # lookup of key value
+  @current_count = redis.hget( 'countit', params['key'] ).to_i
+  params['current_count'] = @current_count
   erb :index
 end
 
-get '/count' do
-  erb :index
-end
-
-post '/' do
-  @count = @params['item_count'].to_i
-  erb :index
-end
-
-post '/count' do
-  @count = @params['item_count'].to_i
+# Create value for users count
+#
+# @key string
+#
+post '/count/:key' do
+  c = redis.hget( 'countit', params['key'] ).to_i
+  @current_count = c + params['item_count'].to_i
+  redis.hset( 'countit', params['key'], @current_count )
+  params['current_count'] = @current_count
   erb :index
 end
 
