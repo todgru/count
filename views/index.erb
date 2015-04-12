@@ -11,7 +11,6 @@
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <!meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <!-- FONT
@@ -39,7 +38,7 @@
         <h1>The Count!</h1>
         Current Value: <%= @count %>
 
-        <form action="/" method="post">
+        <form action="<%= url("/count")%>" method="post">
           <label for="item_count">Enter Count: </label>
           <input class="u-pull-left" placeholder="#" id="item_count" type="text" name="item_count">
           <input class="button-primary u-pull-left" value="Submit" type="submit">

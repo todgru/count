@@ -6,7 +6,11 @@ get '/' do
   erb :index
 end
 
-post '/' do
+get '/count' do
+  erb :index
+end
+
+post '/count' do
   @count = @params['item_count'].to_i
   erb :index
 end
