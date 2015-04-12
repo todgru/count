@@ -17,7 +17,7 @@ end
 
 redis = Redis.new
 
-get '/?' do
+get '/' do
   key = params['key']
   params['key'] = CountIt::key if key.nil?
   redirect "/#{params['key']}"
