@@ -40,7 +40,7 @@
         key: <%= params['key'] %>
         item_count: <%= params['item_count'] %>
 
-        <form action="<%= url("/count/#{params['key']}")%>" method="post">
+        <form action="<%= url("/#{params['key']}")%>" method="post">
 
           <label for="item_count">Enter Count (numbers only): </label>
           <input class="u-pull-left" placeholder="#" id="item_count" type="text" pattern="\d*" name="item_count">

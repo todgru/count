@@ -17,35 +17,20 @@ end
 
 redis = Redis.new
 
-get '/' do
+get '/?' do
   key = params['key']
   params['key'] = CountIt::key if key.nil?
-  redirect "count/#{params['key']}"
+  redirect "/#{params['key']}"
 end
 
-# trailing slash optional
-get '/count/?' do
-  key = params['key']
-  params['key'] = CountIt::key if key.nil?
-  redirect "count/#{params['key']}"
-end
-
-# get the value of the users count
-#
-# @key string
-#
-get '/count/:key' do
+get '/:key' do
   # lookup of key value
   @current_count = redis.hget( 'countit', params['key'] ).to_i
   params['current_count'] = @current_count
   erb :index
 end
 
-# Create value for users count
-#
-# @key string
-#
-post '/count/:key' do
+post '/:key' do
   c = redis.hget( 'countit', params['key'] ).to_i
   @current_count = c + params['item_count'].to_i
   redis.hset( 'countit', params['key'], @current_count )
