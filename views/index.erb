@@ -36,18 +36,17 @@
       <div class="twelve columns">
 
         <h1>The Count!</h1>
-        Current Value: <%= params['current_count'] %>
-        key: <%= params['key'] %>
-        item_count: <%= params['item_count'] %>
+        Your URL: <%= url("/#{params['key']}")%>
+        <p>
+          Total Count: <%= params['current_count'] %>
+          Last Entry: <%= params['item_count'] %>
 
-        <form action="<%= url("/#{params['key']}")%>" method="post">
-
-          <label for="item_count">Enter Count (numbers only): </label>
-          <input class="u-pull-left" placeholder="#" id="item_count" type="text" pattern="\d*" name="item_count">
-          <input class="button-primary u-pull-left" value="Submit" type="submit">
-
-        </form>
-
+          <form action="<%= url("/#{params['key']}")%>" method="post">
+            <label for="item_count">Enter Count: </label>
+            <input class="u-pull-left" placeholder="#" id="item_count" type="text" pattern="\d*" name="item_count">
+            <input class="button-primary u-pull-left" value="Submit" type="submit">
+          </form>
+        </p>
       </div>
     </div>
   </div>

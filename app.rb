@@ -6,7 +6,7 @@ Bundler.require(:default)
 class CountIt
 
   def self.key
-    @key ||= self.generate_new_key
+    self.generate_new_key
   end
 
   def self.generate_new_key
