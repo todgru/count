@@ -10,7 +10,7 @@ group :default do
   gem 'rspec-mocks'
   gem 'webmock'
   gem 'sinatra'
-  gem 'rerun'
+  gem 'emk-sinatra-url-for'
 end
 
 group :server do

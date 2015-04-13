@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'sinatra/url_for'
 Bundler.require(:default)
 
 class CountIt
@@ -17,20 +18,21 @@ end
 
 redis = Redis.new
 
-get '/' do
+get '/?' do
   key = params['key']
   params['key'] = CountIt::key if key.nil?
-  redirect "/#{params['key']}"
+  #redirect "/#{params['key']}"
+  redirect url_for("/#{params['key']}")
 end
 
-get '/:key' do
+get '/:key/?' do
   # lookup of key value
   @current_count = redis.hget( 'countit', params['key'] ).to_i
   params['current_count'] = @current_count
   erb :index
 end
 
-post '/:key' do
+post '/:key/?' do
   c = redis.hget( 'countit', params['key'] ).to_i
   @current_count = c + params['item_count'].to_i
   redis.hset( 'countit', params['key'], @current_count )
